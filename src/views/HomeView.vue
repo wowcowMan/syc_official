@@ -1,18 +1,54 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
+    <Nav msg="Welcome to Your Vue.js App" />
+    <div class="banner">
+      <div class="bg-img">
+        <img src="https://picsum.photos/1280/1080/?random=10">
+      </div>
+    </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import Nav from '@/components/Nav.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    Nav, Footer
   }
 }
 </script>
+<style lang="scss">
+.banner {
+  width: 100%;
+  .bg-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    vertical-align: bottom;
+    filter: grayscale(50%);
+    filter: blur(3px);
+    filter: brightness(0.3);
+
+    img {
+      width: 100%;
+      vertical-align: middle;
+    }
+  }
+}
+
+@media screen and (max-width:820px) {
+  .banner {
+    aspect-ratio: 9 / 16;
+  }
+
+  .banner .bg-img {
+    height: 100%;
+  }
+}
+</style>
