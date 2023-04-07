@@ -11,5 +11,5 @@ module.exports = defineConfig({
     }
   },
 
-  // publicPath: '/vue-cli/dist/'
+  publicPath: '/syc_official/dist/'
 })
