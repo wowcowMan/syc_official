@@ -5,12 +5,14 @@
     <div class="menu-btn" :class="isActive" @click="closeNav">
       <div class="burger"></div>
     </div>
-    <ul ref="navList" class="nav-list" :class="isActive">
-      <li class="nav-item"><router-link to="/">home</router-link></li>
-      <li class="nav-item"><router-link to="/about">about</router-link></li>
-      <li class="nav-item"><a href="#">works</a></li>
-      <li class="nav-item"><a href="#">contact</a></li>
-    </ul>
+    <div class="list-clip" :class="isActive" @click.self="isActive = ''">
+      <ul ref="navList" class="nav-list" :class="isActive">
+        <li class="nav-item"><router-link to="/">home</router-link></li>
+        <li class="nav-item"><router-link to="/about">about</router-link></li>
+        <li class="nav-item"><a href="#">works</a></li>
+        <li class="nav-item"><a href="#">contact</a></li>
+      </ul>
+    </div>
 
   </div>
 </template>
@@ -47,12 +49,13 @@ export default {
       rgba(0, 0, 0, 0));
   box-sizing: border-box;
   width: 100%;
-  padding: 50px 50px;
+  padding: 50px;
   display: flex;
   height: 138px;
   justify-content: flex-end;
   top: 0;
   z-index: 5;
+
   // border: 1px solid blue;
 
   .logo {
@@ -72,6 +75,13 @@ export default {
       text-indent: 101%;
       overflow: hidden;
       line-height: 60px;
+    }
+  }
+
+  @media screen and (max-width:820px) {
+    .logo {
+      left: 50px;
+      right: 0;
     }
   }
 
@@ -136,62 +146,102 @@ export default {
     }
   }
 
-  ul::before {
-    content: '';
-    // border: 1px solid blue;
-    display: block;
-    width: 115px;
-    height: 50px;
-    margin-left: 50px;
-    background-image: url('../assets/syc.png');
-    background-repeat: no-repeat;
-    background-position: 0px center;
-    background-size: contain;
-    text-indent: 101%;
-    overflow: hidden;
-    line-height: 60px;
-  }
-
-  ul {
-    background: rgb(38, 38, 38);
+  .list-clip {
+    // border: 1px solid red;
     box-sizing: border-box;
-    list-style: none;
     width: 0;
     height: 100vh;
-    padding: 50px 0;
     margin-top: 8px;
     overflow: hidden;
     position: fixed;
     right: 0;
     top: -9px;
     transition: all .3s ease;
-    // z-index: 5;
 
-    li {
-      width: 65%;
-      padding: 25px 0px 25px 50px;
+    ul::before {
+      content: '';
+      display: block;
+      width: 115px;
+      height: 50px;
+      margin-left: 50px;
+      background-image: url('../assets/syc.png');
+      background-repeat: no-repeat;
+      background-position: 0px center;
+      background-size: contain;
+      text-indent: 101%;
+      overflow: hidden;
+      line-height: 60px;
+      // border: 1px solid blue;
+    }
 
-      a {
-        display: block;
-        text-decoration: none;
-        text-align: left;
-        font-size: 24px;
-        font-weight: 300;
-        color: aliceblue;
-        opacity: .7;
-        transition: all .3s;
-        width: 100px;
+    ul {
+      background: rgb(38, 38, 38);
+      list-style: none;
+      width: 0;
+      margin-left: auto;
+      margin-right: 0;
+      height: 100%;
+      padding: 50px 0;
+      transition: all .3s ease;
+
+      li {
+        width: 65%;
+        padding: 25px 0px 25px 50px;
+
+        a {
+          display: block;
+          text-decoration: none;
+          text-align: left;
+          font-size: 24px;
+          font-weight: 300;
+          color: aliceblue;
+          opacity: .7;
+          transition: all .3s;
+          width: 100px;
+        }
+
+        a:hover {
+          text-shadow: 0 0 8px #DADADA;
+          opacity: 1;
+        }
+      }
+    }
+
+    ul.active {
+      width: 300px;
+    }
+
+    @media screen and (max-width:820px) {
+      ul::before {
+        margin: 0;
+        margin-top: -150px;
       }
 
-      a:hover {
-        text-shadow: 0 0 8px #DADADA;
-        opacity: 1;
+      ul {
+        // border: 1px solid blue;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        li {
+          // border: 1px solid blue;
+          padding: 25px 0;
+
+          a {
+            margin: 0 auto;
+            // text-align: center;
+          }
+        }
+      }
+
+      ul.active {
+        width: 100%;
       }
     }
   }
 
-  ul.active {
-    width: 300px;
+  .list-clip.active {
+    width: 100%;
   }
-}
-</style>
+}</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <Nav msg="Welcome to Your Vue.js App" />
+    <Nav></Nav>
     <div class="banner">
       <div class="bg-img">
         <img src="https://picsum.photos/1280/1080/?random=10">

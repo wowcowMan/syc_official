@@ -179,4 +179,59 @@ export default {
     margin: 0 10px;
   }
 }
+
+@media screen and (max-width:820px) {
+  // .header {
+  //       padding: 50px;
+  //       justify-content: space-between;
+  //   }
+    .contact-wrap,
+    .site-map,
+    .social {
+        width: fit-content;
+    }
+
+    .footer-logo {
+        width: 110px;
+    }
+
+    .footer-logo p,
+    .contact-wrap .contact p {
+        display: block;
+        font-size: 8px;
+    }
+
+    .site-map h3,
+    .footer .social h3 {
+        margin-bottom: 15px;
+    }
+
+    .site-map ul,
+    .footer .social ul {
+        display: block;
+    }
+
+    .site-map li:not(:last-child) {
+        margin-right: 0;
+        margin-bottom: 29px;
+    }
+
+    .footer .social li:not(:last-child) {
+        margin-right: 0;
+        margin-bottom: 25px;
+    }
+
+    .footer .social i {
+        font-size: 35px;
+    }
+
+    .footer-txt{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .footer-txt p {
+        margin-bottom: 5px;
+    }
+}
 </style>
