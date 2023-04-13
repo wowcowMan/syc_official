@@ -198,30 +198,37 @@ export default {
     .footer-logo p,
     .contact-wrap .contact p {
         display: block;
-        font-size: 8px;
+        font-size: 12px;
     }
 
     .site-map h3,
-    .footer .social h3 {
-        margin-bottom: 15px;
+    .social h3 {
+        margin-bottom: 30px;
+        font-size: 14px;
     }
 
     .site-map ul,
-    .footer .social ul {
+    .social ul {
         display: block;
     }
 
+    .site-map ul li a{
+      font-size: 14px;
+    }
+    .social ul  li a i{
+      font-size: 25px;
+    }
     .site-map li:not(:last-child) {
         margin-right: 0;
         margin-bottom: 29px;
     }
 
-    .footer .social li:not(:last-child) {
+    .social li:not(:last-child) {
         margin-right: 0;
         margin-bottom: 25px;
     }
 
-    .footer .social i {
+    .social i {
         font-size: 35px;
     }
 

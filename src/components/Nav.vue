@@ -2,10 +2,12 @@
   <!-- <h1>hello</h1> -->
   <div class="nav">
     <div class="logo"><router-link to="/">syc.</router-link></div>
-    <div class="menu-btn" :class="isActive" @click="closeNav">
+
+    <div class="menu-btn" :class="isActive" @click="toggleNav">
       <div class="burger"></div>
     </div>
-    <div class="list-clip" :class="isActive" @click.self="isActive = ''">
+
+    <div class="list-clip" :class="isActive" @click.self="closeNav">
       <ul ref="navList" class="nav-list" :class="isActive">
         <li class="nav-item"><router-link to="/">home</router-link></li>
         <li class="nav-item"><router-link to="/about">about</router-link></li>
@@ -19,7 +21,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Nav',
   data() {
     return {
       isShow: false,
@@ -27,7 +29,7 @@ export default {
     }
   },
   methods: {
-    closeNav() {
+    toggleNav() {
       if (this.isShow === true) {
         this.isShow = false
         this.isActive = ''
@@ -35,6 +37,10 @@ export default {
         this.isShow = true
         this.isActive = 'active'
       }
+    },
+    closeNav() {
+      this.isShow = false
+      this.isActive = ''
     }
   }
 }
@@ -146,8 +152,11 @@ export default {
     }
   }
 
+  .list-clip.active {
+    width: 100%;
+  }
+
   .list-clip {
-    // border: 1px solid red;
     box-sizing: border-box;
     width: 0;
     height: 100vh;
@@ -240,8 +249,5 @@ export default {
       }
     }
   }
-
-  .list-clip.active {
-    width: 100%;
-  }
-}</style>
+}
+</style>
