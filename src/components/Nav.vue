@@ -3,16 +3,34 @@
   <div class="nav">
     <div class="logo"><router-link to="/">syc.</router-link></div>
 
-    <div class="menu-btn" :class="isActive" @click="toggleNav">
+    <div class="menu-btn" :class="{ active: isShow }" @click="isShow = !isShow, isDrop = false">
       <div class="burger"></div>
     </div>
 
-    <div class="list-clip" :class="isActive" @click.self="closeNav">
-      <ul ref="navList" class="nav-list" :class="isActive">
-        <li class="nav-item"><router-link to="/">home</router-link></li>
-        <li class="nav-item"><router-link to="/about">about</router-link></li>
-        <li class="nav-item"><a href="#">works</a></li>
-        <li class="nav-item"><a href="#">contact</a></li>
+    <div class="list-clip" :class="{ active: isShow }" @click.self="close">
+      <ul ref="navList" class="nav-list" :class="{ active: isShow }">
+        <li class="nav-item">
+          <router-link to="/" @click.self="close">home</router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link to="/about" @click.self="close">about</router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link to="/worksboard/gallery" @click.self="close">works</router-link>
+          <button @click.prevent="isDrop = !isDrop"></button>
+          <ul class="work-category" :class="{ active: isDrop }">
+            <!-- <li><a href="#">photography</a></li> -->
+            <!-- <li><a href="#">videography</a></li> -->
+            <li><router-link to="/worksboard/photography/all/list" @click.self="close">photography</router-link></li>
+            <li><router-link to="/worksboard/videography/all/list" @click.self="close">videography</router-link></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="#" @click.self="close">contact</a>
+        </li>
       </ul>
     </div>
 
@@ -25,22 +43,14 @@ export default {
   data() {
     return {
       isShow: false,
-      isActive: ''
+      isActive: '',
+      isDrop: false
     }
   },
   methods: {
-    toggleNav() {
-      if (this.isShow === true) {
-        this.isShow = false
-        this.isActive = ''
-      } else {
-        this.isShow = true
-        this.isActive = 'active'
-      }
-    },
-    closeNav() {
+    close() {
       this.isShow = false
-      this.isActive = ''
+      this.isDrop = false
     }
   }
 }
@@ -167,7 +177,7 @@ export default {
     top: -9px;
     transition: all .3s ease;
 
-    ul::before {
+    .nav-list::before {
       content: '';
       display: block;
       width: 115px;
@@ -183,7 +193,8 @@ export default {
       // border: 1px solid blue;
     }
 
-    ul {
+    .nav-list {
+      box-sizing: border-box;
       background: rgb(38, 38, 38);
       list-style: none;
       width: 0;
@@ -194,10 +205,12 @@ export default {
       transition: all .3s ease;
 
       li {
+        position: relative;
         width: 65%;
         padding: 25px 0px 25px 50px;
 
         a {
+          // border: 1px solid red;
           display: block;
           text-decoration: none;
           text-align: left;
@@ -206,45 +219,97 @@ export default {
           color: aliceblue;
           opacity: .7;
           transition: all .3s;
-          width: 100px;
+          width: 80px;
         }
 
         a:hover {
           text-shadow: 0 0 8px #DADADA;
           opacity: 1;
         }
+
+        button {
+          cursor: pointer;
+          display: block;
+          position: absolute;
+          top: 30px;
+          left: 135px;
+          background: none;
+          border: none;
+          width: 20px;
+          height: 20px;
+          // border: 1px solid red;
+        }
+
+        button::after {
+          content: '';
+          display: block;
+          width: 0;
+          height: 0;
+          margin: auto;
+          border-style: solid;
+          border-width: 7px 5px 0 5px;
+          border-color: #DADADA transparent transparent transparent;
+        }
+
+        .work-category {
+          box-sizing: border-box;
+          // border: 1px solid red;
+          height: 0;
+          overflow: hidden;
+          transition: height .3s ease;
+
+          li {
+            padding: 0;
+            margin: 25px 25px 25px 25px;
+
+            a {
+              font-size: 20px;
+            }
+          }
+        }
+
+        .work-category.active {
+          height: 105px;
+        }
       }
     }
 
-    ul.active {
+    .nav-list.active {
       width: 300px;
     }
 
     @media screen and (max-width:820px) {
-      ul::before {
+      .nav-list::before {
         margin: 0;
         margin-top: -150px;
       }
 
-      ul {
-        // border: 1px solid blue;
+      .nav-list {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
 
         li {
-          // border: 1px solid blue;
           padding: 25px 0;
+          // border: 1px solid blue;
 
           a {
             margin: 0 auto;
-            // text-align: center;
+          }
+
+          button {
+            // border: 1px solid blue;
+            left: 60%;
+          }
+
+          .work-category li {
+            margin-left: 22%;
           }
         }
       }
 
-      ul.active {
+      .nav-list.active {
         width: 100%;
       }
     }

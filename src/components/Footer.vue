@@ -21,7 +21,7 @@
         <ul>
           <li class="nav-item"><router-link to="/">home</router-link></li>
           <li class="nav-item"><router-link to="/about">about</router-link></li>
-          <li><a href="#">works</a></li>
+          <li class="nav-item"><router-link to="/worksboard/gallery">works</router-link></li>
           <li><a href="#">contact</a></li>
         </ul>
       </div>

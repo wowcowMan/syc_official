@@ -1,34 +1,31 @@
 <template>
   <Nav></Nav>
-  <div class="about">
-    <Carousel></Carousel>
-    <div class="profile">
-      <div class="profile-pic">
-        <img src="https://picsum.photos/250/250/?random=10" alt="">
-      </div>
-
-      <div class="introduction">
-        <div class="ch-txt">
-          <h2>施友筌</h2>
-          <p>攝影師、影音工作者。2022年畢業於明志科技大學視覺傳達設計系，大三時，曾於策展公司「築點設計」擔任設計助理一職，現為自由工作者。熱愛台灣山林，經常從事戶外運動，</p>
+  <div class="container">
+    <div class="about">
+      <Carousel></Carousel>
+      <div class="profile">
+        <div class="profile-pic">
+          <img src="https://picsum.photos/250/250/?random=10" alt="">
         </div>
-        <div class="eng-txt">
-          <h2>SYC (Shih Yu Chuan)</h2>
-          <p>Photographer, Videographer. Graduated from Ming Chi University of Technology Visual Communication Design
-            Department in 2022, assigned as design assistant at “archicake design” in the 3rd grade, freelancing
-            currently. Obsessed with the nature beauty of Taiwan, commonly go for outdoor activities.</p>
+        <div class="introduction">
+          <div class="ch-txt">
+            <h2>{{ profiles[0].author }}</h2>
+            <p>{{ profiles[0].content }}</p>
+          </div>
+          <div class="eng-txt">
+            <h2>{{ profiles[1].author }}</h2>
+            <p>{{ profiles[1].content }}</p>
+          </div>
         </div>
-
-      </div>
-
-      <div class="experience">
-        <div class="ch-txt">
-          <h2>經歷</h2>
-          <p>築點設計/設計助理</p>
-        </div>
-        <div class="eng-txt">
-          <h2>Experience</h2>
-          <p>archicake design assistant</p>
+        <div class="experience">
+          <div class="ch-txt">
+            <h2>經歷</h2>
+            <p>{{ profiles[2].content }}</p>
+          </div>
+          <div class="eng-txt">
+            <h2>Experience</h2>
+            <p>{{ profiles[3].content }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -45,17 +42,48 @@ export default {
   components: {
     Nav, Footer, Carousel
   },
+  data() {
+    return {
+      profiles: []
+    }
+  },
+  methods: {
+    getProfiles() {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles`
+      this.$http.get(api).then((res) => {
+        // console.log(res.data)
+        this.profiles = res.data.articles.reverse()
+        this.profiles.forEach(item => {
+          this.getArticle(item)
+        })
+      })
+    },
+    getArticle(item) {
+      const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/article/${item.id}`
+      this.$http.get(api).then((res) => {
+        // console.log('aticle:', res.data)
+        item.content = res.data.article.content
+      })
+    }
+  },
   mounted() {
     try {
       // 这里是你的代码
     } catch (error) {
       console.error(error)
     }
+  },
+  created() {
+    this.getProfiles()
   }
 }
 </script>
 
 <style scoped lang="scss">
+.container{
+  width: 100%;
+  background: #000;
+}
 .about {
   padding: 150px 0;
   max-width: 1280px;
@@ -162,4 +190,5 @@ export default {
     }
   }
 
-}</style>
+}
+</style>

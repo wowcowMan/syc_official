@@ -18,6 +18,6 @@ export default {
   list-style: none;
   // overflow-x: hidden;
   font-family: 'Roboto', sans-serif;
-
+  // background: #1A1A1A;
 }
 </style>

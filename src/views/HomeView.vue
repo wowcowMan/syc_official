@@ -3,7 +3,7 @@
   <Nav></Nav>
   <div class="banner">
     <div class="bg-img">
-      <img src="https://picsum.photos/1280/1080/?random=10">
+      <img src="https://picsum.photos/900/500/?random=10">
     </div>
   </div>
   <Footer></Footer>
@@ -21,7 +21,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 .banner {
   width: 100%;
 
