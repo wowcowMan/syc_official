@@ -46,7 +46,7 @@ export default {
       const sheetId = '1gMXfxr7Zu8gVS_JdSYEPIBu7BadTy-BFdC5_S_O44_0'
       // const asd = projectData
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1`
-      this.$http.get(url, { params: { key: 'AIzaSyBdjPypTptcwPIhBI34Tt4-4YqXci_ayFk' } })
+      this.$http.get(url, { params: { key: `${process.env.VUE_APP_SHEET_KEY}` } })
         .then((res) => {
           const data = []
           // console.log(res.data.values)
