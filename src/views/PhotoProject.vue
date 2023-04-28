@@ -43,20 +43,22 @@ export default {
   methods: {
     // 獲取google sheets資料
     getProjectData() {
-      const sheetId = '1gMXfxr7Zu8gVS_JdSYEPIBu7BadTy-BFdC5_S_O44_0'
+      const sheetId = '1Qvk6q6zxcVPyCg7hz782qem1zADCnIr_7JtCCBMslw8'
       // const asd = projectData
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1`
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/photo`
       this.$http.get(url, { params: { key: `${process.env.VUE_APP_SHEET_KEY}` } })
         .then((res) => {
           const data = []
-          // console.log(res.data.values)
+          console.log(res.data.values)
           res.data.values.forEach((i) => {
             data.push({
               category: i[0],
               title: i[1],
               imgList: JSON.parse(i[2]),
-              description: i[3],
-              preview: i[4]
+              video: i[3],
+              description: i[4],
+              preview: i[5],
+              date: new Date(i[6])
             })
           })
           this.photoData = data
