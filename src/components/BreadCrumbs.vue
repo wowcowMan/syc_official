@@ -1,30 +1,37 @@
 <template>
   <ul class="category-list">
     <li v-for="(i, key) in categoryList" :key="key">
-      <router-link :to="`/worksboard/photography/${i}/list`" :class="{ active: category === i }">{{ i }}</router-link>
+      <!-- <router-link :to="`/worksboard/${type}/${i}`" :class="{ active: category === i }">{{ i }}</router-link> -->
+      <router-link :to="`/worksboard/${type}/${i}`" :class="{ 'active': category === i }" @click="click(i)">{{ i
+      }}</router-link>
     </li>
   </ul>
 </template>
 
 <script>
 export default {
+  // props: ['type'],
   data() {
     return {
       categoryList: [
         'all', 'landscape', 'commercial', 'documentary'
-      ],
-      isActive: 'all'
+      ]
+      // isActive: 'all'
     }
   },
   computed: {
+    type() {
+      return this.$route.params.type
+    },
     category() {
       return this.$route.params.category
     }
   },
 
   methods: {
-    click() {
-      this.isActive = this.category
+    click(category) {
+      this.$emit('emit-category', category)
+      // this.isActive = this.category
     }
   },
   created() {
@@ -66,4 +73,5 @@ export default {
   }
 }
 
-;</style>
+;
+</style>

@@ -2,89 +2,63 @@
   <div class="container">
     <div class="link-wrap">
       <router-link to="/worksboard/gallery">gallery</router-link>
-      <router-link to="/worksboard/photography/all/list" class="active">photography</router-link>
+      <router-link to="/worksboard/photography/all/list">photography</router-link>
       <router-link to="/worksboard/videography/all/list">videography</router-link>
     </div>
     <BreadCrumbs></BreadCrumbs>
-    <router-view :showData="showData" :showProject="showProject" @emit-project="filtreProject">
-    </router-view>
+    <!-- <router-view :type="type" :showData="showData" :showProject="showProject" @emit-project="filtreProject">
+    </router-view> -->
+    <ul class="project-list">
+      <li v-for="(item, key) in showData" :key="key">
+        <router-link :to="`/worksboard/${type}/${item.category}/${item.title}`" @click="emitShow(item.title)">
+          <div class="pic">
+            <img :src="item.preview" alt="preiew-img">
+          </div>
+          <p>{{ item.title }}</p>
+        </router-link>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import BreadCrumbs from '../components/BreadCrumbs.vue'
 export default {
-  components: {
-    BreadCrumbs
-  },
+  // props: {
+  //   showData: {
+  //     // type: Object
+  //   },
+  //   type: {
+  //     type: String
+  //   }
+  // },
+
   data() {
     return {
+      type: 'photography',
       photoData: [],
       showData: [],
       showProject: {}
     }
   },
-  computed: {
-    // 監聽url的route.params.category
-    category() {
-      return this.$route.params.category
-    }
-  },
-  watch: {
-    // 當route.params.category變動時更新分類列表
-    category(newCategory, oldCategory) {
-      if (newCategory === 'all') {
-        this.showData = this.photoData
-      } else {
-        this.showData = this.photoData.filter((i) => i.category === newCategory)
-      }
-    }
-  },
+
+  // watch: {
+  //   // 當route.params.category變動時更新分類列表
+  //   category(newCategory, oldCategory) {
+  //     if (newCategory === 'all') {
+  //       this.showData = this.photoData
+  //     } else {
+  //       this.showData = this.photoData.filter((i) => i.category === newCategory)
+  //     }
+  //   }
+  // },
+
   methods: {
-    // 獲取google sheets資料
-    getProjectData() {
-      const sheetId = '1Qvk6q6zxcVPyCg7hz782qem1zADCnIr_7JtCCBMslw8'
-      // const asd = projectData
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/photo`
-      this.$http.get(url, { params: { key: `${process.env.VUE_APP_SHEET_KEY}` } })
-        .then((res) => {
-          const data = []
-          console.log(res.data.values)
-          res.data.values.forEach((i) => {
-            data.push({
-              category: i[0],
-              title: i[1],
-              imgList: JSON.parse(i[2]),
-              video: i[3],
-              description: i[4],
-              preview: i[5],
-              date: new Date(i[6])
-            })
-          })
-          this.photoData = data
-          this.filterList()
-        })
-    },
-    filterList() {
-      // 篩選分類列表
-      this.showData = this.photoData.filter((i) => {
-        if (this.category === "all") {
-          return i.category
-        } else {
-          return i.category === this.category
-        }
-      })
-      // 根據route.params.project篩選當前顯示專案（專案頁面重整時需要）
-      this.showProject = this.showData.filter((i) => i.title === this.$route.params.project)[0]
-    },
-    // 接收emit篩選當前顯示專案
-    filtreProject(title) {
-      this.showProject = this.showData.filter((i) => i.title === title)[0]
+    emitShow(title) {
+      this.$emit('emit-project', title)
     }
   },
 
   created() {
-    this.getProjectData()
   }
 }
 </script>
@@ -112,6 +86,52 @@ export default {
 
     a.active {
       color: #fff;
+    }
+  }
+
+  .project-list {
+    width: 100%;
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    li {
+      width: 100%;
+      // border: 1px solid #fff;
+      box-sizing: border-box;
+
+      a {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+
+        .pic {
+          aspect-ratio: 1/1;
+          overflow: hidden;
+
+          img {
+            object-fit: cover;
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-position: center;
+            transition: all .3s ease;
+          }
+        }
+
+        p {
+          text-decoration: none;
+          text-align: center;
+          color: #fff;
+          padding: 10px 0;
+        }
+      }
+
+      a:hover {
+        img {
+          transform: scale(1.1);
+        }
+      }
+
     }
   }
 }

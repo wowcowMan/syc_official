@@ -5,60 +5,37 @@
       <router-link to="/worksboard/photography/all/list">photography</router-link>
       <router-link to="/worksboard/videography/all/list" class="active">videography</router-link>
     </div>
-    <BreadCrumbs @emit-category="showList"></BreadCrumbs>
-    <router-view :data="categoryData"></router-view>
+    <BreadCrumbs :type="type"></BreadCrumbs>
+    <router-view :type=type :showData="showData" :showProject="showProject" @emit-project="filtreProject">
+    </router-view>
   </div>
 </template>
 
 <script>
-import BreadCrumbs from '../components/BreadCrumbs.vue'
+import getData from '../mixins/getData'
 export default {
-  components: {
-    BreadCrumbs
-  },
   data() {
     return {
-      videoData: []
+      type: 'videography',
+      videoData: [],
+      showData: [],
+      showProject: {}
     }
   },
-  computed: {
-    // 篩選資料
-    categoryData() {
-      if (this.$route.params.category === 'all') {
-        return this.videoData
+  mixins: [getData],
+  watch: {
+    // 當route.params.category變動時更新分類列表
+    category(newCategory, oldCategory) {
+      if (newCategory === 'all') {
+        this.showData = this.videoData
       } else {
-        return this.videoData.filter(i => i.category === this.$route.params.category)
+        this.showData = this.videoData.filter((i) => i.category === newCategory)
       }
     }
   },
-  methods: {
-    showList(category) {
-      this.$router.push(`/worksboard/videography/${category}/list`)
-    }
-    // getProjectData() {
-    //   const sheetId = '12EITfEG3X6A8OAT146zAaayNE_wAhewpuFlb0wJL0Cs'
-    //   // const asd = projectData
-    //   const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/Sheet1`
-    //   this.$http.get(url, { params: { key: 'AIzaSyBdjPypTptcwPIhBI34Tt4-4YqXci_ayFk' } })
-    //     .then((res) => {
-    //       const data = []
-    //       // console.log(res.data.values)
-    //       res.data.values.forEach((i) => {
-    //         data.push({
-    //           category: i[0],
-    //           title: i[1],
-    //           imgList: JSON.parse(i[2]),
-    //           description: i[3],
-    //           preview: i[4]
-    //         })
-    //       })
-    //       this.videoData = data
-    //     })
-    // }
-  },
 
   created() {
-    // this.getProjectData()
+    this.getProjectData(this.videoData, 'video')
   }
 }
 </script>

@@ -1,38 +1,92 @@
 <template>
-  <div class="category">
-    <h3>gallery</h3>
-    <!-- <p>{{ categoryId }}</p> -->
+  <div class="gallery">
+    <div class="recent">
+      <div class="pic">
+        <img :src="recentData.preview" alt="preview-img">
+      </div>
+      <div class="txt">
+        <h3>{{ recentData.title }}</h3>
+        <p>{{ recentData.description }},Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore eveniet at,
+          cumque nam et odit incidunt placeat voluptatum corporis magnam, repudiandae ipsa? Ullam atque placeat animi
+          delectus at eum accusamus.</p>
+      </div>
+      <span>As of recently...</span>
+    </div>
+
+    <p>videography</p>
+
+    <p>photography</p>
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'gallery'
+  name: 'gallery',
+  props: {
+    data: {
+      type: Array
+    },
+    recentData: {
+      type: Object
+    }
+  },
+  methods: {
+
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.category {
-  box-sizing: border-box;
+.gallery {
   width: 100%;
   max-width: 1280px;
   margin: auto;
-  padding: 150px 50px 50px 50px;
-  color: #fff;
 
-  h3 {
-    margin-bottom: 50px;
-    font-size: 24px;
-  }
+  .recent {
+    width: 100%;
+    position: relative;
 
-  .project-list {
-    display: flex;
+    .pic {
+      position: relative;
 
-    li {
-      margin-right: 15px;
+      img {
+        filter: grayscale(70%);
+        width: 100%;
+      }
+
+    }
+
+    .pic:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+    }
+
+    .txt {
+      position: absolute;
+      right: 50px;
+      bottom: 50px;
+      width: 400px;
+      color: #fff;
+
+      h3 {
+        font-size: 48px;
+        margin-bottom: 5px;
+      }
+    }
+    span {
+      position: absolute;
+      left: 50px;
+      bottom: 50px;
+      font-weight: 300;
+      color: #fff;
     }
   }
-}
-</style>
-<!-- https://accounts.google.com/o/oauth2/auth?client_id=24333613557-bfr9hsif9rt9d66ockdnu8arb1im359t.apps.googleusercontent.com&redirect_uri=http://localhost:8080/oauth2callback&scope=https://www.googleapis.com/auth/spreadsheets.readonly&response_type=code -->
-<!-- http://localhost:8080/oauth2callback?code=4/0AVHEtk4TNtBs49o2Ax5uAznVR1swlU8f87uN_dR6LgvtQcDsK9SZJ_4UfW7IjTJiibfI5w&scope=https://www.googleapis.com/auth/spreadsheets.readonly#/ -->
+}</style>

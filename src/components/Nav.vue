@@ -23,8 +23,8 @@
           <ul class="work-category" :class="{ active: isDrop }">
             <!-- <li><a href="#">photography</a></li> -->
             <!-- <li><a href="#">videography</a></li> -->
-            <li><router-link to="/worksboard/photography/all/list" @click.self="close">photography</router-link></li>
-            <li><router-link to="/worksboard/videography/all/list" @click.self="close">videography</router-link></li>
+            <li><router-link to="/worksboard/photography/all" @click.self="close">photography</router-link></li>
+            <li><router-link to="/worksboard/videography/all" @click.self="close">videography</router-link></li>
           </ul>
         </li>
 

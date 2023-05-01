@@ -1,53 +1,186 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" :class="typeList === type ? 'photography' : 'videography'">
     <ul class="project">
-      <li v-for="(i, key) in showProject.imgList" :key="key">
+      <li v-for="(i, key) in projectData.imgList" :key="key">
         <img :src="i" alt="project-img">
       </li>
     </ul>
+    <!-- <iframe v-if="typeList !== type" :src="projectData.video" allow="autoplay"></iframe> -->
+    <div class="txt" :class="{ active: isActive }">
+      <button v-if="typeList === type" type="button" @click.prevent="isActive = !isActive">內文展開</button>
+      <h3 v-if="typeList !== type">{{ projectData.title }}</h3>
+      <p>{{ projectData.description }},Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ab magni aut
+        asperiores vero voluptate ullam a, maiores eum, voluptatibus veritatis nihil dolorem repellendus! Perspiciatis
+        odio voluptatem perferendis fugit natus.</p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    showProject: {
-
-    },
-    showData: {}
+    projectData: {
+      type: Object
+    }
   },
   data() {
     return {
-      tempData: {}
+      tempData: {},
+      typeList: 'photography',
+      isActive: false
     }
   },
-
+  computed: {
+    type() {
+      return this.$route.params.type
+    }
+  },
   created() {
-
+    this.tempData = this.projectData
   }
 }
 </script>
 
 <style scoped lang="scss">
-.wrap .txt {
-  box-sizing: border-box;
-  // width: 40%;
-  border: 1px solid red;
-  position: fixed;
-  right: 165px;
-  top: 265px;
+.wrap.photography {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
 
-  p {
-    border: 1px solid blue;
+  ul {
+    width: 65%;
+
+    li {
+      margin-bottom: 25px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .txt {
+    box-sizing: border-box;
+    position: sticky;
+    width: 35%;
+    padding: 25px;
+    right: 10px;
+    top: 0px;
+
+    button {
+      display: none;
+    }
+
+    p {
+      color: #fff;
+      font-size: 18px;
+    }
   }
 }
 
-li {
-  width: 65%;
-  margin-bottom: 25px;
+@media screen and (max-width:768px) {
+  .wrap.photography {
+    display: block;
 
-  img {
-    width: 100%;
+    ul {
+      width: 100%;
+    }
+
+    .txt {
+      // border: 1px solid red;
+      position: fixed;
+      background: rgba($color: #000000, $alpha: .9);
+      width: 25px;
+      height: 100px;
+      top: 235px;
+      right: 0;
+      overflow: hidden;
+      padding-right: 0;
+
+      button {
+        display: block;
+        // background: #fff;
+        background: rgba(166, 166, 166, .5);
+        position: absolute;
+        left: 0px;
+        top: 0;
+        width: 25px;
+        height: 100px;
+        border: none;
+        border-radius: 8px 0 0 8px;
+        color: transparent;
+      }
+
+      button::after {
+        content: '內文展開';
+        display: block;
+        position: absolute;
+        left: 3px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        color: #A6A6A6;
+      }
+    }
+
+    .txt.active {
+      width: 100%;
+      height: auto;
+      padding: 25px 50px;
+
+      button {
+        border-radius: 0 8px 8px 0;
+        width: 20px;
+        // height: 50px;
+        top: 25px;
+      }
+
+      button::after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 7px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 15px 0 15px 7px;
+        border-color: transparent transparent transparent #A6A6A6;
+      }
+
+      p {
+        display: block;
+      }
+    }
+  }
+}
+
+.wrap.videography {
+
+  // border: 1px solid red;
+  ul {
+    li {
+      margin-bottom: 25px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .txt {
+    box-sizing: border-box;
+
+    h3 {
+      font-size: 64px;
+      color: #fff;
+    }
+
+    p {
+      color: #fff;
+      font-size: 18px;
+    }
   }
 }
 </style>

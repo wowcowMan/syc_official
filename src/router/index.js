@@ -41,33 +41,27 @@ const routes = [
         component: () => import('../views/Gallery.vue')
       },
       {
-        path: 'photography/:category',
-        component: () => import('../views/PhotoProject.vue'),
-        children: [
-          {
-            path: 'list',
-            component: () => import('../views/ProjectList.vue')
-          },
-          {
-            path: ':project',
-            component: () => import('../views/Project.vue')
-          }
-        ]
+        path: ':type/:category',
+        component: () => import('../views/ProjectList.vue')
       },
       {
-        path: 'videography/:category',
-        component: () => import('../views/VideoProject.vue'),
-        children: [
-          {
-            path: 'list',
-            component: () => import('../views/ProjectList.vue')
-          },
-          {
-            path: ':project',
-            component: () => import('../views/Project.vue')
-          }
-        ]
+        path: ':type/:category/:project',
+        component: () => import('../views/Project.vue')
       }
+      // {
+      //   path: 'videography/:category',
+      //   component: () => import('../views/VideoProject.vue'),
+      //   children: [
+      //     // {
+      //     //   path: 'list',
+      //     //   component: () => import('../views/ProjectList.vue')
+      //     // },
+      //     {
+      //       path: ':project',
+      //       component: () => import('../views/Project.vue')
+      //     }
+      //   ]
+      // }
     ]
   }
 ]
