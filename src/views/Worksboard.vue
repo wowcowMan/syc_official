@@ -15,7 +15,7 @@
 
       <BreadCrumbs v-if="$route.params.type"></BreadCrumbs>
 
-      <router-view @emit-project="filterProject" :data="allData" :recentData="recentData" :categoryData="categoryData"
+      <router-view @emit-project="filterProject" :galleryData="galleryData" :recentData="recentData" :categoryData="categoryData"
         :projectData="projectData"></router-view>
     </div>
   </div>
@@ -35,16 +35,19 @@ export default {
     return {
       typeLinks: ['gallery', 'photography', 'videography'],
       allData: [],
+      galleryData: [[], []],
       projectData: {},
       recentData: {}
     }
   },
   computed: {
+    // 根據params篩選出照片或影片的專案列表
     typeData() {
       return this.allData.filter((i) => {
         return i.type === this.$route.params.type
       })
     },
+    // 根據params篩選出專案分類列表
     categoryData() {
       return this.typeData.filter((i) => {
         if (this.$route.params.category === 'all') {
@@ -59,6 +62,7 @@ export default {
     }
   },
   watch: {
+    // 當params.project有變動時，更新projectData
     project() {
       this.filterProject(this.project)
     }
@@ -72,7 +76,7 @@ export default {
       this.$http.get(url, { params: { key: `${process.env.VUE_APP_SHEET_KEY}` } })
         .then((res) => {
           const data = []
-          console.log(res.data.values)
+          // console.log(res.data.values)
           res.data.values.forEach((i) => {
             data.push({
               type: i[0],
@@ -86,6 +90,8 @@ export default {
             })
           })
           this.allData = data
+          this.filterGallery()
+          // 在專案頁面重整時，根據params篩選projectData
           if (this.$route.params.project) {
             this.projectData = this.categoryData.filter((i) => {
               return i.title === this.$route.params.project
@@ -94,11 +100,21 @@ export default {
           this.filterRencent()
         })
     },
+    filterGallery() {
+      this.galleryData[0] = this.allData.filter((i) => {
+        return i.type === 'videography'
+      })
+      this.galleryData[1] = this.allData.filter((i) => {
+        return i.type === 'photography' && ['ZIGZAG', '嘉義市東公有零售市場', '合歡山'].includes(i.title)
+      })
+    },
+    // 點擊專案時觸發(emit)
     filterProject(project) {
       this.projectData = this.categoryData.filter((i) => {
         return i.title === project
       })[0]
     },
+    // 篩選最新專案
     filterRencent() {
       this.recentData = this.allData.reduce((prev, current) => {
         return (prev.date > current.date) ? prev : current

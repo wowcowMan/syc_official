@@ -3,18 +3,21 @@
     <div class="container profile-wrap">
       <form v-for="(item, key) in profiles" :key="key" class="mb-5" @submit.prevent="updateProfile(item.id)">
         <h3>{{ item.title }}</h3>
+
         <div class="mb-3" v-if="item.description === 'intro'">
           <h5 for="name" class="form-label">名稱：</h5>
           <label v-if="tempProfile.title !== item.title">{{ item.author }}</label>
           <input v-model="tempProfile.author" type="text" class="form-control" id="name"
             v-if="tempProfile.title === item.title">
         </div>
+
         <div class="mb-3">
           <h5 for="content" class="form-label">內容：</h5>
           <p v-if="tempProfile.title !== item.title">{{ item.content }}</p>
           <textarea v-model="tempProfile.content" type="text" class="form-control" id="content"
             v-if="tempProfile.title === item.title" style="height:100px;"></textarea>
         </div>
+
         <div class="row"><button type="button" class="btn btn-primary col mb-3" @click.prevent="editfile(item)">
             edit
           </button></div>

@@ -1,6 +1,7 @@
 <template>
   <div class="gallery">
-    <div class="recent">
+    <!-- <router-link to="/worksboard/photography/all">photography</router-link> -->
+    <router-link class="recent" :to="`/worksboard/${recentData.type}/${recentData.category}/${recentData.title}`">
       <div class="pic">
         <img :src="recentData.preview" alt="preview-img">
       </div>
@@ -11,12 +12,40 @@
           delectus at eum accusamus.</p>
       </div>
       <span>As of recently...</span>
+    </router-link>
+
+    <div class="list-wrap video-list">
+      <div class="link-wrap">
+        <p>videography</p>
+        <router-link to="/worksboard/videography/all">查看更多...</router-link>
+      </div>
+      <ul>
+        <li v-for="(i, key) in galleryData[0]" :key="key">
+          <router-link :to="`/worksboard/${i.type}/${i.category}/${i.title}`" @click="emitProject(i.title)">
+            <div class="pic">
+              <img :src="i.preview" alt="">
+            </div>
+            <p>{{ i.title }}</p>
+          </router-link>
+        </li>
+      </ul>
     </div>
-
-    <p>videography</p>
-
-    <p>photography</p>
-
+    <div class="list-wrap photo-list">
+      <div class="link-wrap">
+        <p>photography</p>
+        <router-link to="/worksboard/photography/all">查看更多...</router-link>
+      </div>
+      <ul>
+        <li v-for="(i, key) in galleryData[1]" :key="key">
+          <router-link :to="`/worksboard/${i.type}/${i.category}/${i.title}`" @click="emitProject(i.title)">
+            <div class="pic">
+              <img :src="i.preview" alt="">
+            </div>
+            <p>{{ i.title }}</p>
+          </router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -24,15 +53,24 @@
 export default {
   name: 'gallery',
   props: {
-    data: {
+    galleryData: {
       type: Array
     },
     recentData: {
       type: Object
     }
   },
+  data() {
+    return {
+      tempData: {}
+    }
+  },
   methods: {
-
+    emitProject(project) {
+      this.$emit('emit-project', project)
+    }
+  },
+  created() {
   }
 }
 </script>
@@ -44,6 +82,7 @@ export default {
   margin: auto;
 
   .recent {
+    display: block;
     width: 100%;
     position: relative;
 
@@ -54,7 +93,6 @@ export default {
         filter: grayscale(70%);
         width: 100%;
       }
-
     }
 
     .pic:after {
@@ -62,7 +100,6 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-      display: block;
       width: 100%;
       height: 100%;
       background: #000;
@@ -70,6 +107,7 @@ export default {
     }
 
     .txt {
+      text-decoration: none;
       position: absolute;
       right: 50px;
       bottom: 50px;
@@ -81,12 +119,126 @@ export default {
         margin-bottom: 5px;
       }
     }
+
     span {
       position: absolute;
       left: 50px;
       bottom: 50px;
       font-weight: 300;
       color: #fff;
+    }
+
+    @media screen and (max-width:768px) {
+      .pic {
+        img {
+          aspect-ratio: 3 / 4;
+          object-fit: cover;
+          margin: auto;
+        }
+      }
+
+      .txt {
+        width: 50%;
+        right: 25px;
+
+        h3 {
+          text-align: right;
+          margin-bottom: 0;
+          font-size: 24px;
+        }
+
+        p {
+          display: none;
+        }
+      }
+
+      span {
+        left: 25px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .list-wrap {
+    margin: 75px 0;
+    .link-wrap{
+      display: flex;
+      align-items: flex-end;
+      p{
+        font-size: 18px;
+        color: #fff;
+      }
+      a{
+        margin: 0 25px;
+        color: #DADADA;
+        font-size: 10px;
+        text-decoration: none;
+      }
+    }
+    @media screen and (max-width:768px){
+      .link-wrap{
+        justify-content: space-between;
+        a{
+          margin: 0 0 0 25px;
+        }
+      }
+    }
+    ul {
+      display: grid;
+      grid-gap: 20px;
+      margin-top: 25px;
+
+      a {
+        text-decoration: none;
+
+        .pic {
+          overflow: hidden;
+          margin-bottom: 25px;
+
+          img {
+            transition: all .3s ease;
+          }
+        }
+
+        p {
+          text-align: center;
+          color: #fff;
+        }
+      }
+
+      a:hover img {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .video-list {
+
+    // margin-top: 60vh;
+    ul {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+
+      .pic {
+        aspect-ratio: 3/4;
+
+        img {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .photo-list {
+    ul {
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+      .pic {
+        aspect-ratio: 16/9;
+
+        img {
+          width: 100%;
+        }
+      }
     }
   }
 }</style>

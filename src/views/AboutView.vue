@@ -8,24 +8,24 @@
           <img src="https://picsum.photos/250/250/?random=10" alt="">
         </div>
         <div class="introduction">
-          <div class="ch-txt">
-            <h2>{{ profiles[0].author }}</h2>
-            <p>{{ profiles[0].content }}</p>
-          </div>
-          <div class="eng-txt">
-            <h2>{{ profiles[1].author }}</h2>
-            <p>{{ profiles[1].content }}</p>
+          <div class="txt" v-for="(i,key) in introFiles" :key="key">
+            <h2>{{ i.author }}</h2>
+            <p>{{ i.content }}</p>
           </div>
         </div>
         <div class="experience">
-          <div class="ch-txt">
+          <div class="txt" v-for="(i,key) in experientFiles" :key="key">
+            <h2>{{ i.title }}</h2>
+            <p>{{ i.content }}</p>
+          </div>
+          <!-- <div class="ch-txt">
             <h2>經歷</h2>
             <p>{{ profiles[2].content }}</p>
           </div>
           <div class="eng-txt">
             <h2>Experience</h2>
             <p>{{ profiles[3].content }}</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -38,13 +38,15 @@ import Nav from '../components/Nav.vue'
 import Footer from '../components/Footer.vue'
 import Carousel from '../components/Carousel.vue'
 export default {
-  name: 'HomeView',
+  name: 'AboutView',
   components: {
     Nav, Footer, Carousel
   },
   data() {
     return {
-      profiles: []
+      // profiles: [],
+      introFiles: [],
+      experientFiles: []
     }
   },
   methods: {
@@ -52,8 +54,17 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles`
       this.$http.get(api).then((res) => {
         // console.log(res.data)
-        this.profiles = res.data.articles.reverse()
-        this.profiles.forEach(item => {
+        // this.profiles = res.data.articles.reverse()
+        this.introFiles = res.data.articles.filter((item) => {
+          return item.description === 'intro'
+        }).reverse()
+        this.experientFiles = res.data.articles.filter((item) => {
+          return item.description !== 'intro'
+        }).reverse()
+        this.introFiles.forEach(item => {
+          this.getArticle(item)
+        })
+        this.experientFiles.forEach(item => {
           this.getArticle(item)
         })
       })
@@ -67,11 +78,11 @@ export default {
     }
   },
   mounted() {
-    try {
-      // 这里是你的代码
-    } catch (error) {
-      console.error(error)
-    }
+    // try {
+    //   // 这里是你的代码
+    // } catch (error) {
+    //   console.error(error)
+    // }
   },
   created() {
     this.getProfiles()
@@ -80,10 +91,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container{
+.container {
   width: 100%;
   background: #000;
 }
+
 .about {
   padding: 150px 0;
   max-width: 1280px;
@@ -131,8 +143,8 @@ export default {
     width: 30%;
   }
 
-  .introduction .ch-txt,
-  .experience .ch-txt {
+  .introduction .txt,
+  .experience .txt {
     height: 110px;
     margin-bottom: 10px;
   }
@@ -183,8 +195,8 @@ export default {
       width: 100%;
     }
 
-    .introduction .ch-txt,
-    .experience .ch-txt {
+    .introduction .txt,
+    .experience .txt {
       height: auto;
       margin-bottom: 35px;
     }

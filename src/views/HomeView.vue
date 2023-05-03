@@ -24,18 +24,19 @@ export default {
 <style scoped lang="scss">
 .banner {
   width: 100%;
-
   .bg-img {
     width: 100%;
-    height: auto;
+    height: 100vh;
+    // height: auto;
     filter: grayscale(50%);
     filter: blur(3px);
     filter: brightness(0.3);
 
     img {
-      object-fit: cover;
-      vertical-align: bottom;
       width: 100%;
+      height: 100%;
+      object-fit: cover;
+      // vertical-align: bottom;
       vertical-align: middle;
     }
   }
