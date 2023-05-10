@@ -63,6 +63,10 @@ const routes = [
       //   ]
       // }
     ]
+  },
+  {
+    path: '/contact',
+    component: () => import('../views/Contact.vue')
   }
 ]
 

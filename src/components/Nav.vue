@@ -29,7 +29,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="#" @click.self="close">contact</a>
+          <router-link to="/contact" @click.self="close">contact</router-link>
         </li>
       </ul>
     </div>

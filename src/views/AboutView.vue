@@ -18,14 +18,6 @@
             <h2>{{ i.title }}</h2>
             <p>{{ i.content }}</p>
           </div>
-          <!-- <div class="ch-txt">
-            <h2>經歷</h2>
-            <p>{{ profiles[2].content }}</p>
-          </div>
-          <div class="eng-txt">
-            <h2>Experience</h2>
-            <p>{{ profiles[3].content }}</p>
-          </div> -->
         </div>
       </div>
     </div>
@@ -44,7 +36,6 @@ export default {
   },
   data() {
     return {
-      // profiles: [],
       introFiles: [],
       experientFiles: []
     }
@@ -54,7 +45,6 @@ export default {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles`
       this.$http.get(api).then((res) => {
         // console.log(res.data)
-        // this.profiles = res.data.articles.reverse()
         this.introFiles = res.data.articles.filter((item) => {
           return item.description === 'intro'
         }).reverse()
@@ -76,13 +66,6 @@ export default {
         item.content = res.data.article.content
       })
     }
-  },
-  mounted() {
-    // try {
-    //   // 这里是你的代码
-    // } catch (error) {
-    //   console.error(error)
-    // }
   },
   created() {
     this.getProfiles()
