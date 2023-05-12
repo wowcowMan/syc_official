@@ -98,6 +98,7 @@ export default {
       padding-right: 0;
 
       button {
+        cursor: pointer;
         display: block;
         // background: #fff;
         background: rgba(166, 166, 166, .5);
@@ -129,6 +130,7 @@ export default {
       padding: 25px 50px;
 
       button {
+        background: none;
         border-radius: 0 8px 8px 0;
         width: 20px;
         // height: 50px;

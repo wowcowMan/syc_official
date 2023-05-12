@@ -3,14 +3,8 @@
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
       ref="carousel">
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://picsum.photos/300/200/?random=10" class="d-block w-100" alt="01">
-        </div>
-        <div class="carousel-item">
-          <img src="https://picsum.photos/300/200/?random=20" class="d-block w-100" alt="02">
-        </div>
-        <div class="carousel-item">
-          <img src="https://picsum.photos/300/200/?random=30" class="d-block w-100" alt="03">
+        <div v-for="(pic, key) in pics" :key="key" class="carousel-item" :class="{ active: key === 0 }">
+          <img :src="pic" class="d-block w-100" :alt="key">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -27,6 +21,7 @@
   </div>
   <!-- <div><h5><img src="https://picsum.photos/300/200/?random=10"></h5></div> -->
 </template>
+
 <style scoped lang="scss">
 @import '~bootstrap/scss/bootstrap';
 
@@ -37,6 +32,7 @@
 }
 
 .carousel {
+
   // padding: 0 50px;
   .carousel-inner {
     width: 100%;
@@ -52,9 +48,11 @@
 @media screen and (max-width:820px) {
   .container {
     padding: 0;
+
     .carousel-inner {
       padding: 0;
       aspect-ratio: 16 / 9;
+
       .carousel-item {
         img {
           width: auto;
@@ -70,6 +68,11 @@
 <script>
 import Carousel from 'bootstrap/js/dist/carousel'
 export default {
+  props: {
+    pics: {
+      type: Array
+    }
+  },
   data() {
     return {
       carousel: {}

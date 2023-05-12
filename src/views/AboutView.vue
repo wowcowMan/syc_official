@@ -1,20 +1,21 @@
 <template>
   <Nav></Nav>
+  <Loading :active="isLoading"></Loading>
   <div class="container">
     <div class="about">
-      <Carousel></Carousel>
+      <Carousel :pics="picsData.carousel"></Carousel>
       <div class="profile">
         <div class="profile-pic">
-          <img src="https://picsum.photos/250/250/?random=10" alt="">
+          <img :src="picsData.headPost" alt="">
         </div>
         <div class="introduction">
-          <div class="txt" v-for="(i,key) in introFiles" :key="key">
+          <div class="txt" v-for="(i, key) in introFiles" :key="key">
             <h2>{{ i.author }}</h2>
             <p>{{ i.content }}</p>
           </div>
         </div>
         <div class="experience">
-          <div class="txt" v-for="(i,key) in experientFiles" :key="key">
+          <div class="txt" v-for="(i, key) in experientFiles" :key="key">
             <h2>{{ i.title }}</h2>
             <p>{{ i.content }}</p>
           </div>
@@ -36,14 +37,19 @@ export default {
   },
   data() {
     return {
+      picsData: {},
       introFiles: [],
-      experientFiles: []
+      experientFiles: [],
+      isLoading: false
     }
   },
   methods: {
     getProfiles() {
+      this.isLoading = true
+      this.getPics()
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/articles`
       this.$http.get(api).then((res) => {
+        this.isLoading = false
         // console.log(res.data)
         this.introFiles = res.data.articles.filter((item) => {
           return item.description === 'intro'
@@ -65,6 +71,14 @@ export default {
         // console.log('aticle:', res.data)
         item.content = res.data.article.content
       })
+    },
+    getPics() {
+      this.$http.get('https://script.google.com/macros/s/AKfycbw0VrYvz9e7tzhAnSNrAbNRRku1FbZIk47bwR7JHH9FArQtmHoPBTIYf5kEXArd1pyx/exec')
+        .then((res) => {
+          // console.log(res)
+          this.picsData = res.data
+        })
+        .catch(err => console.log(err))
     }
   },
   created() {
@@ -109,11 +123,15 @@ export default {
   color: aliceblue;
 
   .profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+    overflow: hidden;
     img {
-      width: 150px;
-      height: 150px;
-      border-radius: 100%;
-      vertical-align: bottom;
+      width: 100%;
+      object-fit: cover;
+      // object-position: 10% 5%;
+      // vertical-align: bottom;
     }
 
   }
