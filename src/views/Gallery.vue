@@ -1,6 +1,5 @@
 <template>
   <div class="gallery">
-    <!-- <router-link to="/worksboard/photography/all">photography</router-link> -->
     <router-link class="recent" :to="`/worksboard/${recentData.type}/${recentData.category}/${recentData.title}`">
       <div class="pic">
         <img :src="recentData.preview" alt="preview-img">

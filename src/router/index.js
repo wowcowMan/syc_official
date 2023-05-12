@@ -48,20 +48,6 @@ const routes = [
         path: ':type/:category/:project',
         component: () => import('../views/Project.vue')
       }
-      // {
-      //   path: 'videography/:category',
-      //   component: () => import('../views/VideoProject.vue'),
-      //   children: [
-      //     // {
-      //     //   path: 'list',
-      //     //   component: () => import('../views/ProjectList.vue')
-      //     // },
-      //     {
-      //       path: ':project',
-      //       component: () => import('../views/Project.vue')
-      //     }
-      //   ]
-      // }
     ]
   },
   {
@@ -74,5 +60,7 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
-
+router.afterEach((to, from) => {
+  window.scrollTo(0, 0)
+})
 export default router

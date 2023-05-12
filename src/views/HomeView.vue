@@ -1,18 +1,14 @@
 <template>
-  <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
   <Nav></Nav>
   <div class="banner">
-    <!-- <iframe src="https://www.youtube.com/embed/17w04fTYdjo?controls=0&showinfo=0&autoplay=1&mute=1&loop=1&playlist=17w04fTYdjo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; fullscreen; picture-in-picture; web-share" allowfullscreen></iframe> -->
-    <!-- <div class="bg-img">
-      <img src="https://picsum.photos/900/500/?random=10">
-    </div> -->
-    <video autoplay muted loop src="../assets/backvideo.mp4"></video>
+    <video autoplay muted loop playsinline>
+      <source src="../assets/backvideo.mp4">
+    </video>
   </div>
   <Footer></Footer>
 </template>
 
 <script>
-// @ is an alias to /src
 import Nav from '../components/Nav.vue'
 import Footer from '../components/Footer.vue'
 
@@ -30,7 +26,6 @@ export default {
   video {
     pointer-events: none;
     width: 100%;
-    // height: auto;
     height: 100vh;
     object-fit: cover;
     vertical-align: bottom;
@@ -42,7 +37,6 @@ export default {
   .bg-img {
     width: 100%;
     height: 100vh;
-    // height: auto;
     filter: grayscale(50%);
     filter: blur(3px);
     filter: brightness(0.3);
@@ -51,7 +45,6 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      // vertical-align: bottom;
       vertical-align: middle;
     }
   }
