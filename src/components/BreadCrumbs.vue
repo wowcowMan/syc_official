@@ -53,6 +53,7 @@ export default {
       background: none;
       border: none;
       color: #A6A6A6;
+      font-size: 12px;
       font-weight: 300;
       text-decoration: none;
     }

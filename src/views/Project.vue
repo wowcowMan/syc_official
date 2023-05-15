@@ -1,17 +1,15 @@
 <template>
   <div class="wrap" :class="typeList === type ? 'photography' : 'videography'">
+    <iframe v-if="typeList !== type" :src="`https://www.youtube.com/embed/${projectData.video}`" allowfullscreen></iframe>
     <ul class="project">
       <li v-for="(i, key) in projectData.imgList" :key="key">
         <img :src="i" alt="project-img">
       </li>
     </ul>
-    <!-- <iframe v-if="typeList !== type" :src="projectData.video" allow="autoplay"></iframe> -->
     <div class="txt" :class="{ active: isActive }">
       <button v-if="typeList === type" type="button" @click.prevent="isActive = !isActive">內文展開</button>
       <h3 v-if="typeList !== type">{{ projectData.title }}</h3>
-      <p>{{ projectData.description }},Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore ab magni aut
-        asperiores vero voluptate ullam a, maiores eum, voluptatibus veritatis nihil dolorem repellendus! Perspiciatis
-        odio voluptatem perferendis fugit natus.</p>
+      <p>{{ projectData.description }}</p>
     </div>
   </div>
 </template>
@@ -130,10 +128,11 @@ export default {
       padding: 25px 50px;
 
       button {
+        // border: 1px solid red;
         background: none;
         border-radius: 0 8px 8px 0;
         width: 20px;
-        // height: 50px;
+        height: 30px;
         top: 25px;
       }
 
@@ -143,7 +142,6 @@ export default {
         position: absolute;
         left: 7px;
         top: 50%;
-        transform: translateY(-50%);
         width: 0;
         height: 0;
         border-style: solid;
@@ -159,7 +157,12 @@ export default {
 }
 
 .wrap.videography {
-
+iframe{
+  border: none;
+  width: 100%;
+  aspect-ratio: 4/3;
+  // height: 100%;
+}
   // border: 1px solid red;
   ul {
     li {

@@ -7,9 +7,7 @@
         </div>
         <div class="txt">
           <p>{{ item.title }}</p>
-          <span v-if="typeList !== type">{{ item.description }},Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Nemo ullam eum reprehenderit eaque cupiditate quae amet alias perferendis corporis! Dolores sequi sint autem
-            saepe repudiandae, qui odio velit error similique!</span>
+          <span v-if="typeList !== type">{{ item.description }}</span>
         </div>
       </router-link>
     </li>
@@ -138,6 +136,7 @@ export default {
 
         span {
           font-size: 12px;
+          line-height: 1.5;
         }
       }
     }
@@ -149,6 +148,9 @@ export default {
 
       .txt {
         width: 35%;
+        span{
+          font-size: 16px;
+        }
       }
     }
 
