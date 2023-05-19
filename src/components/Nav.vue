@@ -96,7 +96,7 @@ export default {
 
   @media screen and (max-width:820px) {
     .logo {
-      left: 50px;
+      left: 45px;
       right: 0;
     }
   }

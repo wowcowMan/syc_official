@@ -1,24 +1,22 @@
 <template>
   <Nav></Nav>
   <Loading :active="isLoading"></Loading>
-  <div class="container">
-    <div class="about">
-      <Carousel :pics="picsData.carousel"></Carousel>
-      <div class="profile">
-        <div class="profile-pic">
-          <img :src="picsData.headPost" alt="">
+  <div class="about">
+    <Carousel :pics="picsData.carousel"></Carousel>
+    <div class="profile">
+      <div class="profile-pic">
+        <img :src="picsData.headPost" alt="">
+      </div>
+      <div class="introduction">
+        <div class="txt" v-for="(i, key) in introFiles" :key="key">
+          <h2>{{ i.author }}</h2>
+          <p>{{ i.content }}</p>
         </div>
-        <div class="introduction">
-          <div class="txt" v-for="(i, key) in introFiles" :key="key">
-            <h2>{{ i.author }}</h2>
-            <p>{{ i.content }}</p>
-          </div>
-        </div>
-        <div class="experience">
-          <div class="txt" v-for="(i, key) in experientFiles" :key="key">
-            <h2>{{ i.title }}</h2>
-            <p>{{ i.content }}</p>
-          </div>
+      </div>
+      <div class="experience">
+        <div class="txt" v-for="(i, key) in experientFiles" :key="key">
+          <h2>{{ i.title }}</h2>
+          <p>{{ i.content }}</p>
         </div>
       </div>
     </div>
@@ -88,12 +86,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.container {
+* {
+  white-space: pre-line;
+}
+.about {
   width: 100%;
   background: #000;
-}
-
-.about {
   padding: 150px 0;
   max-width: 1280px;
   margin: 0 auto;

@@ -1,23 +1,25 @@
 <template>
   <Nav></Nav>
   <div class="container">
-    <div class="row">
-      <div class="link-wrap" v-if="$route.params.type">
-        <router-link to="/worksboard/gallery"
-          :class="{ 'active': $route.params.type === 'gallery' }">gallery</router-link>
+    <div class="link-wrap" v-if="$route.params.type">
+      <router-link to="/worksboard/gallery" :class="{ 'active': $route.params.type === 'gallery' }">gallery</router-link>
 
-        <router-link to="/worksboard/photography/all"
-          :class="{ 'active': $route.params.type === 'photography' }">photography</router-link>
+      <router-link to="/worksboard/photography/all"
+        :class="{ 'active': $route.params.type === 'photography' }">photography</router-link>
 
-        <router-link to="/worksboard/videography/all"
-          :class="{ 'active': $route.params.type === 'videography' }">videography</router-link>
-      </div>
-
-      <BreadCrumbs v-if="$route.params.type"></BreadCrumbs>
-
-      <router-view @emit-project="filterProject" :galleryData="galleryData" :recentData="recentData" :categoryData="categoryData"
-        :projectData="projectData"></router-view>
+      <router-link to="/worksboard/videography/all"
+        :class="{ 'active': $route.params.type === 'videography' }">videography</router-link>
     </div>
+
+    <ul v-if="$route.params.type" class="category-list">
+      <li v-for="(i, key) in categoryList" :key="key">
+        <router-link :to="`/worksboard/${type}/${i}`" :class="{ 'active': category === i }">{{ i
+        }}</router-link>
+      </li>
+    </ul>
+
+    <router-view @emit-project="filterProject" :galleryData="galleryData" :recentData="recentData"
+      :categoryData="categoryData" :projectData="projectData"></router-view>
   </div>
   <Footer></Footer>
 </template>
@@ -25,15 +27,16 @@
 <script>
 import Nav from '../components/Nav.vue'
 import Footer from '../components/Footer.vue'
-import BreadCrumbs from '../components/BreadCrumbs.vue'
 export default {
   name: 'works',
   components: {
-    Nav, Footer, BreadCrumbs
+    Nav, Footer
   },
   data() {
     return {
-      typeLinks: ['gallery', 'photography', 'videography'],
+      categoryList: [
+        'all', 'landscape', 'commercial', 'documentary'
+      ],
       allData: [],
       galleryData: [[], []],
       projectData: {},
@@ -47,7 +50,7 @@ export default {
         return i.type === this.$route.params.type
       })
     },
-    // 根據params篩選出專案分類列表
+    // 根據params從typeData篩選出專案分類列表
     categoryData() {
       return this.typeData.filter((i) => {
         if (this.$route.params.category === 'all') {
@@ -57,12 +60,18 @@ export default {
         }
       })
     },
+    type() {
+      return this.$route.params.type
+    },
+    category() {
+      return this.$route.params.category
+    },
     project() {
       return this.$route.params.project
     }
   },
   watch: {
-    // 當params.project有變動時，更新projectData
+    // 當params.project有變動時，更新projectData，返回時才會跟著更動
     project() {
       this.filterProject(this.project)
     }
@@ -91,13 +100,11 @@ export default {
           })
           this.allData = data
           this.filterGallery()
+          this.filterRencent()
           // 在專案頁面重整時，根據params篩選projectData
           if (this.$route.params.project) {
-            this.projectData = this.categoryData.filter((i) => {
-              return i.title === this.$route.params.project
-            })[0]
+            this.filterProject(this.$route.params.project)
           }
-          this.filterRencent()
         })
     },
     filterGallery() {
@@ -129,23 +136,18 @@ export default {
 
 <style scoped lang="scss">
 .container {
+  // border: 1px solid red;
   box-sizing: border-box;
   width: 100%;
+  max-width: 1280px;
   background: #000;
+  margin: auto;
   padding: 150px 0 50px;
 
-  .row {
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 1280px;
-    padding: 0 50px;
-    margin: auto;
-  }
-
   .link-wrap {
-    padding-bottom: 15px;
+    position: relative;
+    padding: 0 50px 15px;
     margin-bottom: 15px;
-    border-bottom: 1px solid #A6A6A6;
 
     a {
       margin-right: 15px;
@@ -157,6 +159,54 @@ export default {
     a.active {
       color: #fff;
     }
+  }
+
+  .link-wrap:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50px;
+    right: 50px;
+    display: block;
+    height: 1px;
+    background: #A6A6A6;
+  }
+
+  .category-list {
+    padding: 0 50px;
+  }
+}
+.category-list {
+  display: flex;
+  margin-bottom: 15px;
+
+  li {
+    position: relative;
+    margin-right: 20px;
+
+    a {
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: #A6A6A6;
+      font-size: 12px;
+      font-weight: 300;
+      text-decoration: none;
+    }
+
+    a.active {
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+
+  li:not(:last-child):after {
+    content: '/';
+    position: absolute;
+    right: -15px;
+    bottom: 0;
+    color: #A6A6A6;
+    font-size: 18px;
   }
 }
 </style>

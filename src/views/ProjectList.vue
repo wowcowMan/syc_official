@@ -51,8 +51,9 @@ export default {
 
 <style scoped lang="scss">
 .project-list {
+  box-sizing: border-box;
   width: 100%;
-
+  padding: 0 50px;
   li {
     box-sizing: border-box;
 

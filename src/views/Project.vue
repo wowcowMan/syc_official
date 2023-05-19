@@ -40,6 +40,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wrap{
+  padding: 0 50px;
+}
 .wrap.photography {
   position: relative;
   display: flex;
@@ -160,7 +163,7 @@ export default {
 iframe{
   border: none;
   width: 100%;
-  aspect-ratio: 4/3;
+  aspect-ratio: 16/9;
   // height: 100%;
 }
   // border: 1px solid red;

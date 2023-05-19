@@ -6,9 +6,7 @@
       </div>
       <div class="txt">
         <h3>{{ recentData.title }}</h3>
-        <p>{{ recentData.description }},Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore eveniet at,
-          cumque nam et odit incidunt placeat voluptatum corporis magnam, repudiandae ipsa? Ullam atque placeat animi
-          delectus at eum accusamus.</p>
+        <p>{{ recentData.description }}</p>
       </div>
       <span>As of recently...</span>
     </router-link>
@@ -76,13 +74,14 @@ export default {
 
 <style scoped lang="scss">
 .gallery {
-  width: 100%;
-  max-width: 1280px;
-  margin: auto;
-
   .recent {
+    // position: absolute;
+    // top: 0;
+    // left: 50%;
+    // transform: translateX(-50%);
     display: block;
     width: 100%;
+    max-width: 1280px;
     position: relative;
 
     .pic {
@@ -110,7 +109,7 @@ export default {
       position: absolute;
       right: 50px;
       bottom: 50px;
-      width: 400px;
+      max-width: 400px;
       color: #fff;
 
       h3 {
@@ -160,6 +159,7 @@ export default {
 
   .list-wrap {
     margin: 75px 0;
+    padding: 0 50px;
     .link-wrap{
       display: flex;
       align-items: flex-end;
@@ -213,7 +213,6 @@ export default {
 
   .video-list {
 
-    // margin-top: 60vh;
     ul {
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 
@@ -229,8 +228,7 @@ export default {
 
   .photo-list {
     ul {
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       .pic {
         aspect-ratio: 16/9;
 
