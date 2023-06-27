@@ -71,7 +71,7 @@ export default {
       })
     },
     getPics() {
-      this.$http.get('https://script.google.com/macros/s/AKfycbw0VrYvz9e7tzhAnSNrAbNRRku1FbZIk47bwR7JHH9FArQtmHoPBTIYf5kEXArd1pyx/exec')
+      this.$http.get('https://script.google.com/macros/s/AKfycbzv5YSFsgoTbiBIaLLmruyHGXgHXA1Jj1QffOYWPlGT8pRM_DusCtIEpayVT2fN7me_/exec')
         .then((res) => {
           // console.log(res)
           this.picsData = res.data
@@ -95,7 +95,6 @@ export default {
   padding: 150px 0;
   max-width: 1280px;
   margin: 0 auto;
-  // border: 1px solid red;
 }
 
 .about-carousel {
@@ -121,6 +120,7 @@ export default {
   color: aliceblue;
 
   .profile-pic {
+    background-color: #565656;
     width: 150px;
     height: 150px;
     border-radius: 100%;
@@ -128,8 +128,6 @@ export default {
     img {
       width: 100%;
       object-fit: cover;
-      // object-position: 10% 5%;
-      // vertical-align: bottom;
     }
 
   }
